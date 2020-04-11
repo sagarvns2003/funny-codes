@@ -30,7 +30,6 @@ package com.vidya.ballBag;
  * different ways to remove the balls from the bag.
  */
 public class BallService {
-
 	/**
 	 * @param balls, numbers of balls available in the bag
 	 * @return total number of different ways to remove from the bag
