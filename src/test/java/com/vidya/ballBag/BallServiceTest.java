@@ -1,40 +1,32 @@
 package com.vidya.ballBag;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
-import java.util.Collection;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameter;
-import org.junit.runners.Parameterized.Parameters;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-import com.vidya.ballBag.BallService;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
- * @author Vidya Sagar Gupta <br />
- *         This class is parameterized Junit class to test the method 'ways' by
- *         passing different input parameters.
+ * @author Vidya Sagar Gupta <br>
+ *     This class is parameterized Junit class to test the method 'ways' by passing different input
+ *     parameters.
  */
-@RunWith(value = Parameterized.class)
-public class BallServiceTest {
 
-	@Parameter(value = 0)
-	public int balls;
+class BallServiceTest {
+  
+  @ParameterizedTest
+  @MethodSource("argumentMapping")
+  void testExpectedWays(int balls, int expectedWays) {
+    assertEquals(expectedWays, BallService.ways(balls));
+  }
 
-	@Parameter(value = 1)
-	public int expectedWays;
+  //Steps mapping with expectedJumpCount
+  private static Stream<Arguments> argumentMapping() {
+    return Stream.of(arguments(0, 0), arguments(1,1), arguments(2,2), arguments(3,3), arguments(4,5), arguments(5,8));
+  }
 
-	@Parameters(name = "{index}: differentWaysToRemove_{0}_BallsFromBag = {1}")
-	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { 0, 0 }, { 1, 1 }, { 2, 2 }, { 3, 3 }, { 4, 5 }, { 5, 8 }, { 6, 13 } });
-	}
-
-	@Test
-	public void differentWaysToRemoveFromBagTest() {
-		assertThat(BallService.ways(balls), is(expectedWays));
-	}
 }
